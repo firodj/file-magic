@@ -1,0 +1,4 @@
+[submodule "dependency/regex"]
+	path = dependency/regex
+	url = https://github.com/Distrotech/regex.git
+	branch = regex-20090805
