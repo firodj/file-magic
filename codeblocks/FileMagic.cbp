@@ -31,7 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DHAVE_CONFIG_H" />
-			<Add directory="./" />
+			<Add directory="." />
 		</Compiler>
 		<Linker>
 			<Add library="gnurx" />

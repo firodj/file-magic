@@ -146,7 +146,7 @@ out:
 			tmppath = NULL; \
 		} \
 	} while (/*CONSTCOND*/0)
-				
+
 	if (default_magic) {
 		free(default_magic);
 		default_magic = NULL;
@@ -176,7 +176,7 @@ out:
 	LPTSTR dllpath = malloc(sizeof(*dllpath) * (MAX_PATH + 1));
 	dllpath[MAX_PATH] = 0;	/* just in case long path gets truncated and not null terminated */
 	if (GetModuleFileNameA(NULL, dllpath, MAX_PATH)){
-		PathRemoveFileSpecA(dllpath);
+		BOOL pathremoved = PathRemoveFileSpecA(dllpath);
 		if (strlen(dllpath) > 3 &&
 		    stricmp(&dllpath[strlen(dllpath) - 3], "bin") == 0) {
 			if (asprintf(&tmppath,
@@ -186,7 +186,8 @@ out:
 			if (asprintf(&tmppath,
 			    "%s/share/misc/magic.mgc", dllpath) >= 0)
 				APPENDPATH();
-			else if (asprintf(&tmppath,
+			//else
+            if (asprintf(&tmppath,
 			    "%s/magic.mgc", dllpath) >= 0)
 				APPENDPATH();
 		}
