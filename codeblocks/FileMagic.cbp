@@ -7,13 +7,17 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/FileMagic" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/file" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="*" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add directory="bin/Debug" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/FileMagic" prefix_auto="1" extension_auto="1" />
@@ -25,107 +29,26 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add directory="bin/Release" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DHAVE_CONFIG_H" />
+			<Add option="-DUNICODE" />
 			<Add directory="." />
 		</Compiler>
 		<Linker>
-			<Add library="gnurx" />
-			<Add library="shlwapi" />
+			<Add library="magic-5" />
 		</Linker>
-		<Unit filename="../src/apprentice.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/apptype.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/ascmagic.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/asctime_r.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/asprintf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/cdf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/cdf.h" />
-		<Unit filename="../src/cdf_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/compress.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/ctime_r.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/elfclass.h" />
-		<Unit filename="../src/encoding.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../src/file.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/file.h" />
-		<Unit filename="../src/file_opts.h" />
-		<Unit filename="../src/fmtcheck.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/fsmagic.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/funcs.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/getline.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../src/getopt_long.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/is_tar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/magic.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/mygetopt.h" />
-		<Unit filename="../src/pread.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/print.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/readcdf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/readelf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/readelf.h" />
-		<Unit filename="../src/softmagic.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/strcasestr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/strlcat.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/strlcpy.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/tar.h" />
-		<Unit filename="../src/vasprintf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="FileMagic.cbp" />
 		<Unit filename="config.h" />
 		<Unit filename="magic.h" />
 		<Extensions>

@@ -414,7 +414,12 @@ protected struct magic_set *file_ms_alloc(int);
 protected void file_ms_free(struct magic_set *);
 protected int file_buffer(struct magic_set *, int, const char *, const void *,
     size_t);
-protected int file_fsmagic(struct magic_set *, const char *, struct stat *);
+protected int
+#if defined(WIN32) && defined(UNICODE)
+file_fsmagic(struct magic_set *, const wchar_t *, struct stat *);
+#else
+file_fsmagic(struct magic_set *, const char *, struct stat *);
+#endif
 protected int file_pipe2file(struct magic_set *, int, const void *, size_t);
 protected int file_vprintf(struct magic_set *, const char *, va_list)
     __attribute__((__format__(__printf__, 2, 0)));
@@ -528,7 +533,7 @@ char   *ctime_r(const time_t *, char *);
 char   *asctime_r(const struct tm *, char *);
 #endif
 #ifndef HAVE_FMTCHECK
-const char *fmtcheck(const char *, const char *) 
+const char *fmtcheck(const char *, const char *)
      __attribute__((__format_arg__(2)));
 #endif
 
