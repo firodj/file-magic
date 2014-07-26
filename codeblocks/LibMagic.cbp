@@ -34,12 +34,20 @@
 			<Add option="-Wall" />
 			<Add option="-DHAVE_CONFIG_H" />
 			<Add option="-DUNICODE" />
+			<Add option="-D_REGEX_RE_COMP" />
 			<Add directory="." />
+			<Add directory="../regex" />
 		</Compiler>
 		<Linker>
-			<Add library="gnurx" />
 			<Add library="shlwapi" />
 		</Linker>
+		<Unit filename="../regex/lib/localcharset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../regex/lib/regex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../regex/lib/regex_config.h" />
 		<Unit filename="../src/apprentice.c">
 			<Option compilerVar="CC" />
 		</Unit>
