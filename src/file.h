@@ -504,7 +504,7 @@ extern char *sys_errlist[];
 #endif
 
 #ifndef HAVE_PREAD
-ssize_t pread(int, void *, size_t, off_t);
+ssize_t pread(int, void *, ssize_t, off_t);
 #endif
 #ifndef HAVE_VASPRINTF
 int vasprintf(char **, const char *, va_list);
