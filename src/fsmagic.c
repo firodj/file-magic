@@ -100,7 +100,11 @@ handle_mime(struct magic_set *ms, int mime, const char *str)
 }
 
 protected int
+#if defined(WIN32) && defined(UNICODE)
+file_fsmagic(struct magic_set *ms, const wchar_t *fn, struct stat *sb)
+#else
 file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
+#endif
 {
 	int ret, did = 0;
 	int mime = ms->flags & MAGIC_MIME;
@@ -125,11 +129,15 @@ file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
 		ret = lstat(fn, sb);
 	else
 #endif
+#if defined(WIN32) && defined(UNICODE)
+    ret = _wstat(fn, sb);
+#else
 	ret = stat(fn, sb);	/* don't merge into if; see "ret =" above */
+#endif
 
 #ifdef WIN32
 	{
-		HANDLE hFile = CreateFile((LPCSTR)fn, 0, FILE_SHARE_DELETE |
+		HANDLE hFile = CreateFile(fn, 0, FILE_SHARE_DELETE |
 		    FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0,
 		    NULL);
 		if (hFile != INVALID_HANDLE_VALUE) {

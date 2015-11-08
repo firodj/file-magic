@@ -437,9 +437,19 @@ struct stat;
 protected const char *file_fmttime(uint64_t, int, char *);
 protected struct magic_set *file_ms_alloc(int);
 protected void file_ms_free(struct magic_set *);
-protected int file_buffer(struct magic_set *, int, const char *, const void *,
-    size_t);
-protected int file_fsmagic(struct magic_set *, const char *, struct stat *);
+protected int 
+#if defined(WIN32) && defined(UNICODE)
+file_buffer(struct magic_set *, int, const wchar_t *, const void *,
+#else
+file_buffer(struct magic_set *, int, const char *, const void *,
+#endif
+    size_t);	
+protected int
+#if defined(WIN32) && defined(UNICODE)
+file_fsmagic(struct magic_set *, const wchar_t *, struct stat *);
+#else
+file_fsmagic(struct magic_set *, const char *, struct stat *);
+#endif
 protected int file_pipe2file(struct magic_set *, int, const void *, size_t);
 protected int file_vprintf(struct magic_set *, const char *, va_list)
     __attribute__((__format__(__printf__, 2, 0)));
