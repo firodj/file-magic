@@ -17,13 +17,14 @@ check_function_exists (mkostemp HAVE_MKOSTEMP)
 check_function_exists (mkstemp HAVE_MKSTEMP)
 
 check_include_files (dlfcn.h HAVE_DLFCN_H)
-check_include_files (getopt.h HAVE_GETOPT_H)
-check_include_files (utime.h HAVE_UTIME_H)
 check_include_files (err.h HAVE_ERR_H)
+check_include_files (fcntl.h HAVE_FCNTL_H)
+check_include_files (getopt.h HAVE_GETOPT_H)
+check_include_files (memory.h HAVE_MEMORY_H)
+check_include_files (utime.h HAVE_UTIME_H)
+check_include_files (unistd.h HAVE_UNISTD_H)
 check_include_files (wchar.h HAVE_WCHAR_H)
 check_include_files (wctype.h HAVE_WCTYPE_H)
-check_include_files (memory.h HAVE_MEMORY_H)
-check_include_files (fcntl.h HAVE_FCNTL_H)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/src/magic.h.in"
@@ -34,15 +35,21 @@ configure_file (
   "${PROJECT_BINARY_DIR}/config.h"
 )
 
+file(WRITE "${PROJECT_BINARY_DIR}/.gitignore" "*")
+
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/regex")
 
-set (CMAKE_C_FLAGS "--std=gnu99 ${CMAKE_C_FLAGS}")
+if (MINGW)
+	set (CMAKE_C_FLAGS "--std=gnu99 ${CMAKE_C_FLAGS}")
+endif (MINGW)
 
 add_library(gnurx
 	regex/lib/localcharset.c
 	regex/lib/regex.c
 )
+set_target_properties(gnurx PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
 add_library(magic
     src/apprentice.c
     src/apptype.c
@@ -76,14 +83,17 @@ add_library(magic
     src/strlcpy.c
     src/vasprintf.c
 )
+set_target_properties(magic PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 
 add_executable(file 
 	src/file.c
 	src/getopt_long.c
 )
+set_target_properties(file PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 target_link_libraries (file	magic gnurx shlwapi)
 
 add_library(magic-5 SHARED src/dummy.c)
+set_target_properties(magic-5 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 target_link_libraries (magic-5 
 	-Wl,--whole-archive
 	magic gnurx shlwapi
