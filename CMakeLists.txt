@@ -35,22 +35,15 @@ configure_file (
   "${PROJECT_BINARY_DIR}/config.h"
 )
 
-file(WRITE "${PROJECT_BINARY_DIR}/.gitignore" "*")
-
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/regex")
 
-if (MINGW)
-	set (CMAKE_C_FLAGS "--std=gnu99 ${CMAKE_C_FLAGS}")
-endif (MINGW)
-
-add_library(gnurx
+set (GNURX_SRCS
 	regex/lib/localcharset.c
 	regex/lib/regex.c
 )
-set_target_properties(gnurx PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 
-add_library(magic
+set (MAGIC_SRCS
     src/apprentice.c
     src/apptype.c
     src/ascmagic.c
@@ -83,19 +76,18 @@ add_library(magic
     src/strlcpy.c
     src/vasprintf.c
 )
-set_target_properties(magic PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+add_library(magic-5 SHARED
+	${GNURX_SRCS}
+	${MAGIC_SRCS}
+)
+set_target_properties(magic-5 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS
+	"-m32 -Wl,--output-def=${PROJECT_BINARY_DIR}/libmagic-5.def"
+)
+target_link_libraries (magic-5 shlwapi)
 
 add_executable(file 
 	src/file.c
 	src/getopt_long.c
 )
 set_target_properties(file PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
-target_link_libraries (file	magic gnurx shlwapi)
-
-add_library(magic-5 SHARED src/dummy.c)
-set_target_properties(magic-5 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
-target_link_libraries (magic-5 
-	-Wl,--whole-archive
-	magic gnurx shlwapi
-	-Wl,--no-whole-archive
-)
+target_link_libraries (file magic-5)
