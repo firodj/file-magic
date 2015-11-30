@@ -38,6 +38,7 @@
 			<Add option="-DHAVE_CONFIG_H" />
 			<Add option="-DUNICODE" />
 			<Add directory="." />
+			<Add directory="../regex" />
 		</Compiler>
 		<Linker>
 			<Add library="magic-5" />
