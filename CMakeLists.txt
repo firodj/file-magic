@@ -33,11 +33,11 @@ configure_file (
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/regex")
 
-add_library(gnurx
+set (GNURX_SRCS
 	regex/lib/localcharset.c
 	regex/lib/regex.c
 )
-add_library(magic
+set (MAGIC_SRCS
     src/apprentice.c
     src/apptype.c
     src/ascmagic.c
@@ -69,15 +69,19 @@ add_library(magic
     src/tar.h
     src/vasprintf.c
 )
+
+add_library(magic-5 SHARED
+	${GNURX_SRCS}
+	${MAGIC_SRCS}
+)
+set_target_properties(magic-5 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS 
+	"-m32 -Wl,--output-def=${PROJECT_BINARY_DIR}/libmagic-5.def"
+)
+target_link_libraries (magic-5 shlwapi)
+
 add_executable(file 
 	src/file.c
 	src/getopt_long.c
 )
-target_link_libraries (file	magic gnurx shlwapi)
-
-add_library(magic-5 SHARED src/dummy.c)
-target_link_libraries (magic-5
-	-Wl,--whole-archive
-	magic gnurx shlwapi
-	-Wl,--no-whole-archive
-)
+set_target_properties(file PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+target_link_libraries (file	magic-5)
