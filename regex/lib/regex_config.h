@@ -195,7 +195,7 @@
 #define PACKAGE_NAME "regex"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "regex 20090805"
+#define PACKAGE_STRING "regex 20151122"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "regex"
@@ -204,7 +204,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20090805"
+#define PACKAGE_VERSION "20151122"
 
 /* Define to l, ll, u, ul, ull, etc., as suitable for constants of type
    'ptrdiff_t'. */
@@ -230,7 +230,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "20090805"
+#define VERSION "20151122"
 
 /* Define to l, ll, u, ul, ull, etc., as suitable for constants of type
    'wchar_t'. */
