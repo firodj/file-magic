@@ -108,3 +108,12 @@ add_executable(file
 )
 set_target_properties(file PROPERTIES COMPILE_FLAGS "-m${bitness}" LINK_FLAGS "-m${bitness}")
 target_link_libraries (file magic-5)
+
+file (COPY magic/Header DESTINATION magic/)
+file (COPY magic/Localstuff DESTINATION magic/)
+file(GLOB magdirfiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} magic/Magdir/*)
+file (COPY ${magdirfiles} DESTINATION magic/)
+
+add_custom_command(TARGET file POST_BUILD
+                   COMMAND file ARGS -C -m magic
+                   DEPENDS file)
