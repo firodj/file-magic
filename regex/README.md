@@ -1,2 +1,3 @@
-Taken from: distrotech-regex-20090805
-Github: https://github.com/Distrotech/regex
+Last update from: git://git.savannah.gnu.org/gnulib.git
+
+Modification based: https://github.com/Distrotech/regex.git
