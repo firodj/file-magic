@@ -174,7 +174,7 @@ checkdone(struct magic_set *ms, int *rv)
 
 /*ARGSUSED*/
 protected int
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 file_buffer(struct magic_set *ms, int fd, const wchar_t *inname __attribute__ ((__unused__)),
 #else
 file_buffer(struct magic_set *ms, int fd, const char *inname __attribute__ ((__unused__)),

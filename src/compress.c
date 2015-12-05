@@ -53,7 +53,7 @@ FILE_RCSID("@(#)$File: compress.c,v 1.96 2016/04/20 00:00:26 christos Exp $")
 typedef void (*sig_t)(int);
 # endif /* HAVE_SIG_T */
 #endif 
-#if !defined(__MINGW32__) && !defined(WIN32)
+#if !defined(__MINGW32__) && !defined(_WIN32)
 #include <sys/ioctl.h>
 #endif
 #ifdef HAVE_SYS_WAIT_H

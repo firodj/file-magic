@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #include <shlwapi.h>
 #endif
@@ -71,7 +71,7 @@ FILE_RCSID("@(#)$File: magic.c,v 1.98 2016/04/19 20:51:54 christos Exp $")
 #endif
 #endif
 
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 private void close_and_restore(const struct magic_set *, const wchar_t *, int,
     const struct stat *);
 private int unreadable_info(struct magic_set *, mode_t, const wchar_t *);
@@ -82,7 +82,7 @@ private int unreadable_info(struct magic_set *, mode_t, const char *);
 #endif
 private const char* get_default_magic(void);
 #ifndef COMPILE_ONLY
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 private const char *file_or_fd(struct magic_set *, const wchar_t *, int);
 #else
 private const char *file_or_fd(struct magic_set *, const char *, int);
@@ -93,7 +93,7 @@ private const char *file_or_fd(struct magic_set *, const char *, int);
 #define	STDIN_FILENO	0
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 #include "msutils.h"
 /* HINSTANCE of this shared library. Needed for get_default_magic() */
 static HINSTANCE _w32_dll_instance = NULL;
@@ -189,7 +189,7 @@ get_default_magic(void)
 	static char *default_magic;
 	char *home, *hmagicpath;
 
-#ifndef WIN32
+#ifndef _WIN32
 	struct stat st;
 
 	if (default_magic) {
@@ -277,7 +277,7 @@ magic_open(int flags)
 }
 
 private int
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 unreadable_info(struct magic_set *ms, mode_t md, const wchar_t *file)
 #else
 unreadable_info(struct magic_set *ms, mode_t md, const char *file)
@@ -285,14 +285,14 @@ unreadable_info(struct magic_set *ms, mode_t md, const char *file)
 {
 	if (file) {
 		/* We cannot open it, but we were able to stat it. */
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 	    if (_waccess(file, W_OK) == 0)
 #else
 		if (access(file, W_OK) == 0)
 #endif
 			if (file_printf(ms, "writable, ") == -1)
 				return -1;
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
         if (_waccess(file, X_OK) == 0)
 #else
 		if (access(file, X_OK) == 0)
@@ -366,7 +366,7 @@ magic_list(struct magic_set *ms, const char *magicfile)
 }
 
 private void
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 close_and_restore(const struct magic_set *ms, const wchar_t *name, int fd,
 #else
 close_and_restore(const struct magic_set *ms, const char *name, int fd,
@@ -397,7 +397,7 @@ close_and_restore(const struct magic_set *ms, const char *name, int fd,
 		(void)memset(&utbuf, 0, sizeof(utbuf));
 		utbuf.actime = sb->st_atime;
 		utbuf.modtime = sb->st_mtime;
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
         (void)_wutime(name, &utbuf); /* don't care if loses */
 #else
 		(void) utime(name, &utbuf); /* don't care if loses */
@@ -424,7 +424,7 @@ magic_descriptor(struct magic_set *ms, int fd)
  */
 public const char *
 magic_file(struct magic_set *ms, const char *inname)
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 {
     if (ms == NULL)
 		return NULL;
@@ -442,7 +442,7 @@ magic_file(struct magic_set *ms, const char *inname)
 #endif
 
 private const char *
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 file_or_fd(struct magic_set *ms, const wchar_t *inname, int fd)
 #else
 file_or_fd(struct magic_set *ms, const char *inname, int fd)
@@ -476,7 +476,7 @@ file_or_fd(struct magic_set *ms, const char *inname, int fd)
 		goto done;
 	}
 
-#ifdef WIN32
+#ifdef _WIN32
 	/* Place stdin in binary mode, so EOF (Ctrl+Z) doesn't stop early. */
 	if (fd == STDIN_FILENO)
 		_setmode(STDIN_FILENO, O_BINARY);
@@ -489,7 +489,7 @@ file_or_fd(struct magic_set *ms, const char *inname, int fd)
 			pos = lseek(fd, (off_t)0, SEEK_CUR);
 	} else {
 		int flags = O_RDONLY|O_BINARY;
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 		int okstat = _wstat(inname, &sb) == 0;
 #else
 		int okstat = stat(inname, &sb) == 0;
@@ -502,13 +502,13 @@ file_or_fd(struct magic_set *ms, const char *inname, int fd)
 		}
 
 		errno = 0;
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 		if ((fd = _wopen(inname, flags)) < 0)
 #else
 		if ((fd = open(inname, flags)) < 0)
 #endif
 		{
-#ifdef WIN32
+#ifdef _WIN32
 			/*
 			 * Can't stat, can't open.  It may have been opened in
 			 * fsmagic, so if the user doesn't have read permission,
@@ -557,7 +557,7 @@ file_or_fd(struct magic_set *ms, const char *inname, int fd)
 	} else {
 		/* Windows refuses to read from a big console buffer. */
 		size_t howmany =
-#if defined(WIN32)
+#if defined(_WIN32) && HOWMANY > 8 * 1024
 				_isatty(fd) ? 8 * 1024 :
 #endif
 				ms->bytes_max;

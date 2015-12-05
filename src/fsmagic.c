@@ -53,7 +53,7 @@ FILE_RCSID("@(#)$File: fsmagic.c,v 1.75 2014/12/04 15:56:46 christos Exp $")
 #ifdef major			/* Might be defined in sys/types.h.  */
 # define HAVE_MAJOR
 #endif
-#ifdef WIN32
+#ifdef _WIN32
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -100,7 +100,7 @@ handle_mime(struct magic_set *ms, int mime, const char *str)
 }
 
 protected int
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 file_fsmagic(struct magic_set *ms, const wchar_t *fn, struct stat *sb)
 #else
 file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
@@ -118,7 +118,7 @@ file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
 		return 0;
 	if (fn == NULL)
 		return 0;
-
+    
 #define COMMA	(did++ ? ", " : "")
 	/*
 	 * Fstat is cheaper but fails for files you don't have read perms on.
@@ -129,13 +129,13 @@ file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
 		ret = lstat(fn, sb);
 	else
 #endif
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) & defined(_UNICODE)
     ret = _wstat(fn, sb);
 #else
 	ret = stat(fn, sb);	/* don't merge into if; see "ret =" above */
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 	{
 		HANDLE hFile = CreateFile(fn, 0, FILE_SHARE_DELETE |
 		    FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0,

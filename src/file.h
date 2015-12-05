@@ -37,7 +37,7 @@
 #include <config.h>
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
   #ifdef _WIN64
     #define SIZE_T_FORMAT "I64"
   #else
@@ -66,7 +66,7 @@
 #include <regex.h>
 #include <time.h>
 #include <sys/types.h>
-#ifndef WIN32
+#ifndef _WIN32
 #include <sys/param.h>
 #endif
 /* Do this here and now, because struct stat gets re-defined on solaris */
@@ -79,7 +79,7 @@
 #define MAGIC "/etc/magic"
 #endif
 
-#if defined(__EMX__) || defined (WIN32)
+#if defined(__EMX__) || defined (_WIN32)
 #define PATHSEP	';'
 #else
 #define PATHSEP	':'
@@ -87,7 +87,7 @@
 
 #define private static
 
-#if HAVE_VISIBILITY && !defined(WIN32)
+#if HAVE_VISIBILITY && !defined(_WIN32)
 #define public  __attribute__ ((__visibility__("default")))
 #ifndef protected
 #define protected __attribute__ ((__visibility__("hidden")))
@@ -438,14 +438,14 @@ protected const char *file_fmttime(uint64_t, int, char *);
 protected struct magic_set *file_ms_alloc(int);
 protected void file_ms_free(struct magic_set *);
 protected int 
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 file_buffer(struct magic_set *, int, const wchar_t *, const void *,
 #else
 file_buffer(struct magic_set *, int, const char *, const void *,
 #endif
     size_t);	
 protected int
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 file_fsmagic(struct magic_set *, const wchar_t *, struct stat *);
 #else
 file_fsmagic(struct magic_set *, const char *, struct stat *);

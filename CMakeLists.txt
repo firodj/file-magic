@@ -4,7 +4,8 @@ project (Magic VERSION 5.25)
 include (CheckFunctionExists)
 include (CheckIncludeFiles)
 
-add_definitions(-DHAVE_CONFIG_H -D_REGEX_RE_COMP -DUNICODE)
+add_definitions(-DHAVE_CONFIG_H -D_REGEX_RE_COMP -D_USE_32BIT_TIME_T)
+add_definitions(-DUNICODE -D_UNICODE)
 
 check_function_exists (asctime_r HAVE_ASCTIME_R)
 check_function_exists (asprintf HAVE_ASPRINTF)
