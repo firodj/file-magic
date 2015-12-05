@@ -429,7 +429,7 @@ magic_file(struct magic_set *ms, const char *inname)
     if (ms == NULL)
 		return NULL;
     const wchar_t *wfn = mb2wc(inname);
-	int ret = file_or_fd(ms, wfn, STDIN_FILENO);
+	const char * ret = file_or_fd(ms, wfn, STDIN_FILENO);
     free( wfn );
     return ret;
 }

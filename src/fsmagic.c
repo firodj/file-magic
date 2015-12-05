@@ -169,10 +169,8 @@ file_fsmagic(struct magic_set *ms, const char *fn, struct stat *sb)
 			file_error(ms, errno, "cannot stat `%s'", fn);
 			return -1;
 		}
-		if (file_printf(ms, "cannot open `%s' (%s)",
-		    fn, strerror(errno)) == -1)
-			return -1;
-		return 0;
+        file_error(ms, errno, "cannot open `%s'", fn, strerror(errno));
+		return -1;
 	}
 
 	ret = 1;
