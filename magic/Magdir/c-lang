@@ -47,6 +47,9 @@
 0	regex	\^private:		C++ source text
 !:strength + 30
 !:mime	text/x-c++
+0	regex	\^.*\ [A-Za-z0-9_]+::[A-Za-z0-9_]+\\(	C++ source text
+!:strength + 30
+!:mime	text/x-c++
 
 # From: Mikhail Teterin <mi@aldan.algebra.com> 
 0	string		cscope		cscope reference data
