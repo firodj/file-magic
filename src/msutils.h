@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <wchar.h>
 
-#if defined(WIN32) && defined(UNICODE)
+#if defined(_WIN32) && defined(_UNICODE)
 
 const wchar_t* mb2wc(const char *mb);	// convert utf-8 const char to wchar_t unicode
 
