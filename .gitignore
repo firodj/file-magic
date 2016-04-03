@@ -35,3 +35,11 @@ Makefile.in
 
 /src/file
 /src/magic.h
+
+/config.*.lineno
+/configure.lineno
+
+file-*.tar.gz
+.cvsignore
+
+build/
