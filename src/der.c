@@ -41,7 +41,6 @@ FILE_RCSID("@(#)$File: der.c,v 1.6 2016/04/21 14:26:03 christos Exp $")
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/mman.h>
 
 #include <stdio.h>
 #include <fcntl.h>

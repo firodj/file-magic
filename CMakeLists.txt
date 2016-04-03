@@ -78,6 +78,7 @@ set (MAGIC_SRCS
   src/strlcat.c
   src/strlcpy.c
   src/vasprintf.c
+  src/der.c
 )
 
 if (MINGW)
