@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.2)
-project (Magic VERSION 5.25)
+project (Magic VERSION 5.27)
 
 include (CheckFunctionExists)
 include (CheckIncludeFiles)
